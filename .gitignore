@@ -1,0 +1,11 @@
+# Misc
+.*
+!.git*
+
+# Mac OS X
+.DS_Store
+._*
+
+# Windows
+desktop.ini
+Thumbs.db
