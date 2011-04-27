@@ -19,3 +19,4 @@
   (*) Email: petpow@saberuk.com
   (*) IRC: irc.omega-arcade.com #omega-arcade
   (*) Steam: http://steamcommunity.com/id/saberuk
+  (*) Twitter: http://twitter.com/saberuk
