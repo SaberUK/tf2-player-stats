@@ -16,8 +16,8 @@
 //
 // =============================================================================
 #include <csteamid>
-#include <sourcemod>
 #include <sdktools>
+#include <sourcemod>
 
 #pragma semicolon 1
 
@@ -27,7 +27,7 @@ public Plugin:myinfo =
 	description = "Allows players to view stats via TF2Stats.",
 	author      = "Peter \"SaberUK\" Powell",
 	url         = "http://www.saberuk.com/",
-	version     = "1.1"
+	version     = "1.1.1"
 }
 
 public OnPluginStart()
@@ -36,7 +36,6 @@ public OnPluginStart()
 	
 	RegConsoleCmd("sm_backpack", Command_SmBackpack);
 	RegConsoleCmd("sm_bp", Command_SmBackpack);
-	
 	RegConsoleCmd("sm_mystats", Command_SmMyStats);
 	RegConsoleCmd("sm_stats", Command_SmStats);
 }
@@ -79,12 +78,11 @@ public Action:Command_SmStats(client, args)
 {
 	if (client > 0 && IsClientInGame(client))
 	{
-		new target = 0;
 		if (args > 0)
 		{
 			decl String:arg1[128];
 			GetCmdArgString(arg1, sizeof(arg1));
-			target = FindTarget(client, arg1, true, false);
+			new target = FindTarget(client, arg1, true, false);
 			if (target > 0)
 			{
 				ShowStats(client, target, NULL_STRING);
@@ -98,13 +96,13 @@ public Action:Command_SmStats(client, args)
 	return Plugin_Handled;
 }
 
-ShowStats(client, target, const String:region[])
+ShowStats(client, target, const String:id[])
 {
 	if (client > 0 && IsClientInGame(client) && target > 0 && IsClientInGame(target))
 	{
 		new String:auth[64], String:uri[128];
 		GetClientCSteamID(target, auth, sizeof(auth));
-		Format(uri, sizeof(uri), "http://tf2stats.net/player/%s#%s", auth, region);
+		Format(uri, sizeof(uri), "http://tf2stats.net/player/%s#%s", auth, id);
 		ShowMOTDPanel(client, "TF2Stats", uri, MOTDPANEL_TYPE_URL);
 	}
 	

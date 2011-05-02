@@ -17,10 +17,14 @@
   
 = Changes =
   
-  == Version 1.1 ==
+  == Version 1.1 (02/05/2011) ==
     
     (*) Added support for the /backpack and /bp commands as used by similar plugins.
-  
+
+  == Version 1.1.1 (02/05/2011) ==
+    
+    (*) Cleaned up source code slightly.
+    
 = Support =
   
   (*) Email: petpow@saberuk.com
