@@ -11,8 +11,15 @@
   
 = Usage =
   
+  (*) Type /backpack [#userid|name] or /bp [#userid|name] in the chat area to view some other players backpack.
   (*) Type /mystats in the chat area to view your own stats.
-  (*) Type /stats <name> in the chat area to view some other players stats.
+  (*) Type /stats <#userid|name> in the chat area to view some other players stats.
+  
+= Changes =
+  
+  == Version 1.1 ==
+    
+    (*) Added support for the /backpack and /bp commands as used by similar plugins.
   
 = Support =
   

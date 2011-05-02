@@ -17,6 +17,8 @@
 // =============================================================================
 #include <csteamid>
 #include <sourcemod>
+#include <sdktools>
+
 #pragma semicolon 1
 
 public Plugin:myinfo = 
@@ -25,19 +27,51 @@ public Plugin:myinfo =
 	description = "Allows players to view stats via TF2Stats.",
 	author      = "Peter \"SaberUK\" Powell",
 	url         = "http://www.saberuk.com/",
-	version     = "1.0"
+	version     = "1.1"
 }
 
 public OnPluginStart()
 {
 	LoadTranslations("common.phrases");
+	
+	RegConsoleCmd("sm_backpack", Command_SmBackpack);
+	RegConsoleCmd("sm_bp", Command_SmBackpack);
+	
 	RegConsoleCmd("sm_mystats", Command_SmMyStats);
 	RegConsoleCmd("sm_stats", Command_SmStats);
 }
 
+public Action:Command_SmBackpack(client, args)
+{
+	if (client > 0 && IsClientInGame(client))
+	{
+		new target = 0;
+		if (args > 0)
+		{
+			decl String:arg1[128];
+			GetCmdArgString(arg1, sizeof(arg1));
+			target = FindTarget(client, arg1, true, false);
+		}
+		else
+		{
+			target = GetClientAimTarget(client, true);
+			if (target < 0)
+			{
+				ReplyToCommand(client, "[SM] Usage: sm_backpack [#userid|name]");
+				return Plugin_Handled;
+			}
+		}
+		if (target > 0)
+		{
+			ShowStats(client, target, "itemscroller");
+		}
+	}
+	return Plugin_Handled;
+}
+
 public Action:Command_SmMyStats(client, args)
 {
-	ShowStats(client, client);
+	ShowStats(client, client, NULL_STRING);
 	return Plugin_Handled;
 }
 
@@ -53,7 +87,7 @@ public Action:Command_SmStats(client, args)
 			target = FindTarget(client, arg1, true, false);
 			if (target > 0)
 			{
-				ShowStats(client, target);
+				ShowStats(client, target, NULL_STRING);
 			}
 		}
 		else
@@ -64,13 +98,13 @@ public Action:Command_SmStats(client, args)
 	return Plugin_Handled;
 }
 
-ShowStats(client, target)
+ShowStats(client, target, const String:region[])
 {
 	if (client > 0 && IsClientInGame(client) && target > 0 && IsClientInGame(target))
 	{
 		new String:auth[64], String:uri[128];
 		GetClientCSteamID(target, auth, sizeof(auth));
-		Format(uri, sizeof(uri), "http://tf2stats.net/player/%s", auth);
+		Format(uri, sizeof(uri), "http://tf2stats.net/player/%s#%s", auth, region);
 		ShowMOTDPanel(client, "TF2Stats", uri, MOTDPANEL_TYPE_URL);
 	}
 	
