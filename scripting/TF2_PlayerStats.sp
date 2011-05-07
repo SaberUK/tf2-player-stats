@@ -27,11 +27,19 @@ public Plugin:myinfo =
 	description = "Allows players to view stats via TF2Stats.",
 	author      = "Peter \"SaberUK\" Powell",
 	url         = "http://www.saberuk.com/",
-	version     = "1.1.1"
+	version     = "1.2"
 }
 
 public OnPluginStart()
 {
+	new String:gameFolder[5];
+	GetGameFolderName(gameFolder, sizeof(gameFolder));
+	
+	if (!StrEqual(gameFolder, "tf"))
+	{
+		SetFailState("This plugin does not support your game.");
+	}
+	
 	LoadTranslations("common.phrases");
 	
 	RegConsoleCmd("sm_backpack", Command_SmBackpack);
@@ -78,19 +86,24 @@ public Action:Command_SmStats(client, args)
 {
 	if (client > 0 && IsClientInGame(client))
 	{
+		new target = 0;
 		if (args > 0)
 		{
 			decl String:arg1[128];
 			GetCmdArgString(arg1, sizeof(arg1));
-			new target = FindTarget(client, arg1, true, false);
-			if (target > 0)
-			{
-				ShowStats(client, target, NULL_STRING);
-			}
+			target = FindTarget(client, arg1, true, false);
 		}
 		else
 		{
-			ReplyToCommand(client, "[SM] Usage: sm_stats <#userid|name>");
+			target = GetClientAimTarget(client, true);
+			if (target < 0)
+			{
+				ReplyToCommand(client, "[SM] Usage: sm_stats <#userid|name>");
+			}
+		}
+		if (target > 0)
+		{
+			ShowStats(client, target, NULL_STRING);
 		}
 	}
 	return Plugin_Handled;

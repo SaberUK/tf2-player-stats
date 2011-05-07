@@ -20,10 +20,15 @@
   == Version 1.1 (02/05/2011) ==
     
     (*) Added support for the /backpack and /bp commands as used by similar plugins.
-
+    
   == Version 1.1.1 (02/05/2011) ==
     
     (*) Cleaned up source code slightly.
+    
+  == Version 1.2 (07/05/2011) ==
+    
+    (*) Added check to prevent loading on games other than Team Fortress 2.
+    (*) Added support for finding a player based on the users aim target to the /stats command.
     
 = Support =
   
