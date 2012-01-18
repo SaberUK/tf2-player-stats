@@ -1,5 +1,5 @@
 // =============================================================================
-// [TF2] Player Stats (C) 2011 Peter "SaberUK" Powell <petpow@saberuk.com>
+// [TF2] Player Stats (C) 2011-2012 Peter "SaberUK" Powell <petpow@saberuk.com>
 // =============================================================================
 //
 // This program is free software; you can redistribute it and/or modify it under
